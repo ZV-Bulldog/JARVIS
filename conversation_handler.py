@@ -40,7 +40,7 @@ def summarize_conversation(conversation):
     
     try:
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an assistant. Summarize conversations."},
                 {"role": "user", "content": summary_prompt}
@@ -48,7 +48,7 @@ def summarize_conversation(conversation):
             max_tokens=256,
             temperature=0.5
         )
-        summary = response['choices'][0]['message']['content'].strip()
+        summary = response.choices[0].message.content
         return summary
     except Exception as e:
         print(f"Error summarizing conversation: {str(e)}")
