@@ -26,7 +26,7 @@ def get_chatgpt_response(query, model="gpt-4o-mini"):
 def jarvis_rephrase(text):
     #Pass the summary to ChatGPT to rephrase it like Jarvis.
     openai.api_key = OPENAI_API_KEY
-    prompt = f"Take this summary and rephrase it to sound like Jarvis from the Iron Man Movies. DO NOT INCLUDE any links, hyphens, astericks, or underscores. Use the words sir or mr. vickers to address me. DO NOT Begin your response with certainly, here is the summary in the style of jarvis or anthing similar to that:\n{text}"
+    prompt = f"Take this summary and rephrase it to sound like Jarvis from the Iron Man Movies. DO NOT INCLUDE any links, hyphens, astericks, or underscores. DO NOT Begin your response with certainly, here is the summary in the style of jarvis or anthing similar to that:\n{text}"
 
     try:
         response = openai.chat.completions.create(
