@@ -1,15 +1,20 @@
 import threading  # To handle timeout for user responses
 import os  # To interact with the operating system
- 
+import keyboard  # To detect keypresses (like the 'J' key)
+import sys  # To exit the program
+import pyttsx3 
 from Modules.wake_word import listen_for_wake_word  # Wake word detection
 from Modules.assistant import execute_command  # Command execution functionality
 from Configuration.voice_interaction import take_command, talk  # Voice interaction functions
 from conversation_handler import save_conversation, periodic_chunking  # Conversation handling
 
+# Initialize the pyttsx3 engine
+engine = pyttsx3.init()
+
 # Constants and Global Variables
 SHUTDOWN_KEYWORDS = ["shut down", "quit", "stop", "go to sleep", "ultron is coming"]
 MAX_RETRIES = 3  # Maximum number of retries before stopping
-TIMEOUT_SECONDS = 4  # Time to wait for a user command before timing out
+TIMEOUT_SECONDS = 5  # Time to wait for a user command before timing out
 shutdown_flag = False  # Flag to control the assistant's running state
 
 def timeout_function():
@@ -51,13 +56,18 @@ def retry_user_command(retry_count):
     Retry user input if no command is detected.
     """
     if retry_count < MAX_RETRIES:
-        talk("I didn't hear you, Mr. Stark. Say that again.")  # Prompt the user
+        talk("I didn't hear you, Mr. Vickers. Say that again.")  # Prompt the user
         print(f"Retry {retry_count + 1}/{MAX_RETRIES}: Listening for command...")  # Log retry status
         return retry_count + 1  # Increment retry count
     else:
         talk("I'm sorry, Sir, I have to stop now.")  # Final prompt after max retries
         print("Max retries reached. Shutting down.")  # Log shutdown
         return MAX_RETRIES  # Indicate max retries reached
+
+def stop_speaking():
+    """Function to stop talking and exit the program when 'J' is pressed."""
+    print("J key pressed! Stopping speech and exiting...")
+    engine.stop()  # Stop the speech immediately
 
 def main():
     """
@@ -66,6 +76,9 @@ def main():
     """
     global shutdown_flag
     retry_count = 0  # Counter to track retries
+
+    # Add the hotkey listener for the 'J' key to stop speech
+    keyboard.add_hotkey('j', stop_speaking)
 
     try:
         while not shutdown_flag:
