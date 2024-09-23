@@ -1,0 +1,28 @@
+# To Install the required packages, run the following command: pip install -r requirements.txt
+
+# Required for handling microphone input and audio stream
+pyaudio
+
+# Required for manipulating arrays of audio data
+numpy
+
+# Required for SerpAPI integration (web search, weather, news)
+google-search-results
+
+# Required for WolframAlpha integration (calculations)
+wolframalpha
+
+# Required for Langchain (advanced language processing)
+openai
+
+# Required for speech recognition (speech-to-text)
+SpeechRecognition
+
+# Required for text-to-speech
+pyttsx3
+
+# Required for controlling smart home devices using Matter
+matter
+
+# Required for logging (for debugging purposes)
+logging

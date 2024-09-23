@@ -1,0 +1,19 @@
+jarvis_virtual_assistant/
+│
+├── main.py                     # Main entry point for the assistant
+├── requirements.txt            # Required Python packages
+├── conversation_handler.py     # New conversation handling module
+├── modules/
+│   ├── wake_word.py            # Module for wake word detection
+│   ├── assistant.py            # Core assistant functionality
+│   └── smart_home.py           # Module for smart home device control
+├── services/
+│   ├── serpapi_service.py      # Module for SerpAPI integration (news, weather, search)
+│   ├── wolframalpha_service.py # Module for WolframAlpha integration
+│   ├── matter_service.py       # Module for Matter protocol and smart home device communication
+│   └── openai_service
+├── data/                       # Directory for storing conversation logs
+│   └── conversations.json      # File for saving and loading conversations
+├── Configuration/              # Directory for storing Configurable data
+│   ├── config.py               # Configuration file for API keys and settings
+│   └── voice_interaction.py    # Configuration file for the TTS engine
