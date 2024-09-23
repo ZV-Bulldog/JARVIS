@@ -3,7 +3,7 @@ import logging
 from Services.serpapi_service import get_news, get_weather, search_web
 from Services.wolframalpha_service import calculate
 from Modules.smart_home import control_device
-from Configuration.voice_interaction import talk
+from Configuration.voice_interaction import talk, explain_virtual_assistant
 from Configuration.config import GREETING, USER_NAME, USER_TITLE, PERSONALITY, OPENAI_API_KEY
 from Services.openai_service import get_chatgpt_response
 
@@ -16,6 +16,7 @@ openai.api_key = OPENAI_API_KEY
 # Define Global Variables
 CALCULATION_KEYWORDS = ['calculate', 'compute', 'evaluate', 'solve']
 SEARCH_KEYWORDS = ['search', 'look up']
+SMARTHOME_KEYWORDS = ['turn on', 'turn off', 'thermostat', 'dim', 'brighten']
 
 def execute_command(command):
     """Execute the appropriate function based on the user command."""
@@ -59,8 +60,12 @@ def execute_command(command):
             talk(f"Sorry, I couldn't calculate {expression}.")
 
     # Smart home control command
-    elif 'turn on' in command or 'turn off' in command:
+    elif any(keyword in command for keyword in SMARTHOME_KEYWORDS):
         control_device(command)
+
+    elif "who are you" in command:
+        explain_virtual_assistant()
+        return  # Exit early once the assistant explains itself
 
     # If the command doesn't match any known keywords, pass it to ChatGPT
     else:
