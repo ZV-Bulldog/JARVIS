@@ -13,10 +13,10 @@ def get_chatgpt_response(query, model="gpt-4o-mini"):
                 {"role": "user", "content": query}
             ],
             max_tokens=360,
-            temperature=0.7
+            temperature=0.5
         )
         print(f"Full response: {response}")  # Debugging step to print the full response
-        answer = response.choices[0].message['content'].strip()
+        answer = response.choices[0].message.content
 
         return answer
     except Exception as e:
@@ -26,7 +26,7 @@ def get_chatgpt_response(query, model="gpt-4o-mini"):
 def jarvis_rephrase(text):
     #Pass the summary to ChatGPT to rephrase it like Jarvis.
     openai.api_key = OPENAI_API_KEY
-    prompt = f"Take this summary and rephrase it to sound like Jarvis from the Iron Man Movies:\n{text}"
+    prompt = f"Take this summary and rephrase it to sound like Jarvis from the Iron Man Movies. DO NOT INCLUDE any links, hyphens, astericks, or underscores. Use the words sir or mr. vickers to address me. DO NOT Begin your response with certainly, here is the summary in the style of jarvis or anthing similar to that:\n{text}"
 
     try:
         response = openai.chat.completions.create(
@@ -36,9 +36,9 @@ def jarvis_rephrase(text):
                 {"role": "user", "content": prompt}
             ],
             max_tokens=256,
-            temperature=0.7
+            temperature=0.5
         )
-        jarvis_response = response.choices[0].message.content.strip()
+        jarvis_response = response.choices[0].message.content
         return jarvis_response
     except Exception as e:
         return f"Error contacting ChatGPT while using jarvis_rephrase: {str(e)}"
